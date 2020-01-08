@@ -1,0 +1,40 @@
+[global]
+  checkNewVersion = true
+  sendAnonymousUsage = true
+
+[providers]
+  [providers.docker]
+    watch = true
+    endpoint = "unix:///var/run/docker.sock"
+    exposedByDefault = true
+    swarmMode = true
+
+[api]
+  dashboard = true
+
+[log]
+  level = "error"
+  filePath = "/log/traefik.log"
+
+[accessLog]
+  filePath = "/log/access.log"
+
+[metrics]
+  [metrics.prometheus]
+
+[entryPoints]
+  [entryPoints.web]
+     address = ":80"
+  [entryPoints.web-secure]
+     address = ":443"
+
+[certificatesResolvers.le.acme]
+  email = "aurimas.bachanovicius@gmail.com"
+  storage = "/letsencrypt/acme.json"
+  [certificatesResolvers.le.acme.tlsChallenge]
+
+[http.middlewares]
+  [http.middlewares.auth.basicAuth]
+    users = [
+      "3auris:$apr1$foeiE63M$ngdCwpxXZ5fBRewdGt1Zj/",
+    ]
